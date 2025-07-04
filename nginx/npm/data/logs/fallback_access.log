@@ -1,0 +1,4 @@
+[03/Jul/2025:07:24:04 +0000] 404 - GET http localhost "/login?next=/" [Client 192.168.48.1] [Length 183] [Gzip 3.21] "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36" "-"
+[03/Jul/2025:07:24:05 +0000] 400 - GET http localhost "/favicon.ico" [Client 127.0.0.1] [Length 230] [Gzip -] "-" "-"
+[03/Jul/2025:07:24:06 +0000] 404 - GET http localhost "/login?next=/" [Client 192.168.48.1] [Length 183] [Gzip 3.21] "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36" "-"
+[03/Jul/2025:07:24:12 +0000] 200 - GET http localhost "/" [Client 192.168.48.1] [Length 568] [Gzip 1.86] "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36" "-"
