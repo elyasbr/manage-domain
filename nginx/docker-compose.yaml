@@ -14,7 +14,7 @@ services:
       - "60018:60018" # mongo-secondry
       - "60019:60019" # mongo-arbiter
       - "8443:443"   
-      - "8181:80"
+      - "8181:81"
     volumes:
       - ./npm/data:/data
       - ./npm/letsencrypt:/etc/letsencrypt
