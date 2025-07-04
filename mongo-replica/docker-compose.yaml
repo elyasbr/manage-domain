@@ -1,0 +1,84 @@
+version: "3.8"
+
+services:
+  mongodb-primary:
+    image: bitnami/mongodb:8.0
+    container_name: mongodb-primary
+    environment:
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
+      - MONGODB_ROOT_PASSWORD=SuperSecure123
+      - MONGODB_REPLICA_SET_KEY=replicaKey123
+    volumes:
+      - mongodb_primary_data:/bitnami/mongodb
+    ports:
+      - "27017:27017"      # پورت میزبان: پورت کانتینر
+    networks:
+      - mongo-net
+      - shared-net
+
+  mongodb-secondary:
+    image: bitnami/mongodb:8.0
+    container_name: mongodb-secondary
+    depends_on:
+      - mongodb-primary
+    environment:
+      - MONGODB_REPLICA_SET_MODE=secondary
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-secondary
+      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=SuperSecure123
+      - MONGODB_REPLICA_SET_KEY=replicaKey123
+    volumes:
+      - mongodb_secondary_data:/bitnami/mongodb
+    ports:
+      - "27018:27017"    # دقت کن پورت میزبان متفاوت
+    networks:
+      - mongo-net
+      - shared-net
+
+  mongodb-arbiter:
+    image: bitnami/mongodb:8.0
+    container_name: mongodb-arbiter
+    depends_on:
+      - mongodb-primary
+    environment:
+      - MONGODB_REPLICA_SET_MODE=arbiter
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-arbiter
+      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=SuperSecure123
+      - MONGODB_REPLICA_SET_KEY=replicaKey123
+    volumes:
+      - mongodb_arbiter_data:/bitnami/mongodb
+    ports:
+      - "27019:27017"   # دقت کن پورت میزبان متفاوت
+    networks:
+      - mongo-net
+      - shared-net
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    depends_on:
+      - mongodb-primary
+    ports:
+      - "5051:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: SuperSecure123
+      ME_CONFIG_MONGODB_SERVER: mongodb-primary
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin123
+      ME_CONFIG_MONGODB_URL: mongodb://root:SuperSecure123@mongodb-primary:27017,mongodb-secondary:27017,mongodb-arbiter:27017/?replicaSet=replicaset
+    networks:
+      - shared-net
+
+volumes:
+  mongodb_primary_data:
+  mongodb_secondary_data:
+  mongodb_arbiter_data:
+
+networks:
+  shared-net:
+    external: true
+  mongo-net:
+    driver: bridge

@@ -1,0 +1,18 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"   # پورت اصلی RabbitMQ
+      - "15672:15672" # پورت مدیریت تحت وب
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    networks:
+      - my_auth
+networks:
+  my_auth:
+    name: my_auth
+    driver: bridge
+    external: true

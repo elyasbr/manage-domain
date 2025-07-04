@@ -1,0 +1,16 @@
+services:
+  redis:
+    image: redis
+    container_name: redis
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    restart: always
+    networks:
+      - my_auth
+      - shared-net
+networks:
+  shared-net:
+   external: true
+  my_auth:
+    driver: bridge

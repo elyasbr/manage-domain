@@ -1,0 +1,22 @@
+services:
+  minio:
+    image: quay.io/minio/minio
+    container_name: minio
+    ports:
+      - "9000:9000"
+      - "9090:9090"  # برای پنل مدیریتی
+    environment:
+      MINIO_ROOT_USER: admin  # نام کاربری
+      MINIO_ROOT_PASSWORD: admin123  # رمز عبور
+    command: server /data --console-address ":9090"
+    volumes:
+      - D:\docker\Data\minio:/data
+    networks:
+      - my_cdn  
+
+volumes:
+  minio_data:
+  driver: local
+networks:
+  my_cdn:  # تعریف شبکه
+    driver: bridge
