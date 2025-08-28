@@ -4,19 +4,20 @@ services:
     container_name: minio
     ports:
       - "9000:9000"
-      - "9090:9090"  # برای پنل مدیریتی
+      - "9090:9090"  
     environment:
-      MINIO_ROOT_USER: admin  # نام کاربری
-      MINIO_ROOT_PASSWORD: admin123  # رمز عبور
+      MINIO_ROOT_USER: t0Ocqct2c52v0NjIWFmC  # نام کاربری
+      MINIO_ROOT_PASSWORD: D60M2JW4YmxSm4hmmL3kjjdsqlA6UF4SsNoQhYhm  # رمز عبور
     command: server /data --console-address ":9090"
     volumes:
-      - D:\docker\Data\minio:/data
+      - minio_data:/data   # نام درست volume
     networks:
       - my_cdn  
 
 volumes:
   minio_data:
-  driver: local
+    driver: local   # 👈 اینجا درست شد
+
 networks:
   my_cdn:  # تعریف شبکه
     driver: bridge
