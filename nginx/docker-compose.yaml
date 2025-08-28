@@ -1,26 +1,19 @@
-version: '3.8'
-
 services:
-  nginx-proxy-manager:
+  npm:
     image: jc21/nginx-proxy-manager:latest
-    container_name: nginx-proxy-manager
+    container_name: npm
     restart: unless-stopped
     ports:
-      - "4040:4040"   # pgAdmin (Stream)
-      - "4041:4041"   # mongo-express (Stream)
-      - "4042:4042"   # postgres (Stream)  
-      - "4043:4043"   # redis (Stream)  
-      - "60017:60017" # mongo-primary 
-      - "60018:60018" # mongo-secondry
-      - "60019:60019" # mongo-arbiter
-      - "8443:443"   
-      - "8181:81"
+      - "80:80"     # HTTP
+      - "443:443"   # HTTPS
+      - "81:81"     # NPM Web UI
     volumes:
-      - ./npm/data:/data
-      - ./npm/letsencrypt:/etc/letsencrypt
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
     networks:
       - shared-net
 
 networks:
   shared-net:
     external: true
+

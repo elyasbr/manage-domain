@@ -6,13 +6,14 @@ services:
     container_name: mongodb-primary
     environment:
       - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_REPLICA_SET_NAME=replicaset
       - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
       - MONGODB_ROOT_PASSWORD=SuperSecure123
       - MONGODB_REPLICA_SET_KEY=replicaKey123
     volumes:
       - mongodb_primary_data:/bitnami/mongodb
     ports:
-      - "27017:27017"      # پورت میزبان: پورت کانتینر
+      - "27017:27017"
     networks:
       - mongo-net
       - shared-net
@@ -24,6 +25,7 @@ services:
       - mongodb-primary
     environment:
       - MONGODB_REPLICA_SET_MODE=secondary
+      - MONGODB_REPLICA_SET_NAME=replicaset
       - MONGODB_ADVERTISED_HOSTNAME=mongodb-secondary
       - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
       - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=SuperSecure123
@@ -31,7 +33,7 @@ services:
     volumes:
       - mongodb_secondary_data:/bitnami/mongodb
     ports:
-      - "27018:27017"    # دقت کن پورت میزبان متفاوت
+      - "27018:27017"
     networks:
       - mongo-net
       - shared-net
@@ -43,6 +45,7 @@ services:
       - mongodb-primary
     environment:
       - MONGODB_REPLICA_SET_MODE=arbiter
+      - MONGODB_REPLICA_SET_NAME=replicaset
       - MONGODB_ADVERTISED_HOSTNAME=mongodb-arbiter
       - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
       - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=SuperSecure123
@@ -50,7 +53,7 @@ services:
     volumes:
       - mongodb_arbiter_data:/bitnami/mongodb
     ports:
-      - "27019:27017"   # دقت کن پورت میزبان متفاوت
+      - "27019:27017"
     networks:
       - mongo-net
       - shared-net
@@ -82,3 +85,4 @@ networks:
     external: true
   mongo-net:
     driver: bridge
+

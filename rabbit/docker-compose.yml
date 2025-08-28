@@ -10,9 +10,7 @@ services:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: admin
     networks:
-      - my_auth
+      - shared-net
 networks:
-  my_auth:
-    name: my_auth
-    driver: bridge
+  shared-net:
     external: true
