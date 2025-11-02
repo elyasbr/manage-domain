@@ -5,8 +5,8 @@ services:
     image: postgres:latest
     container_name: postgres
     environment:
-      - POSTGRES_PASSWORD=123456
-      - POSTGRES_DB=arkacoin
+      - POSTGRES_PASSWORD=Modules!123
+      - POSTGRES_DB=delphi
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -16,7 +16,7 @@ services:
     container_name: pgadmin
     environment:
       - PGADMIN_DEFAULT_EMAIL=elyas.gh1985@gmail.com
-      - PGADMIN_DEFAULT_PASSWORD=123456
+      - PGADMIN_DEFAULT_PASSWORD=Modules!123
     volumes:
       - pgadmin_data:/var/lib/pgadmin
     ports:
